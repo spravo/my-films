@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  # TODO
+  # redis:
+
+  postgress:
+    container_name: my-films-postgress
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: my-films
+      POSTGRES_USER: my-films
+    ports:
+      - 5432:5432
+
+  api:
+    container_name: my-films-api
+    build:
+      context: services/api
+    volumes:
+      - ./services/api:/usr/app
+    entrypoint: /bin/sh
+    command: -s
+    tty: true
+    ports:
+      - 3000:3000
+      - 9229:9229
+    environment:
+      NODE_ENV: development
