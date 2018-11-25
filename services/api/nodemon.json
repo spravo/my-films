@@ -1,0 +1,13 @@
+{
+  "verbose": true,
+  "delay": 2000,
+  "ignore": [
+    "node_modules",
+    "*.spec.ts"
+  ],
+  "exec": "node --inspect=0.0.0.0:9229 --require ts-node/register src/index.ts",
+  "watch": [
+    "./src/**/*.ts"
+  ],
+  "ext": "ts,json"
+}
