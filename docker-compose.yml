@@ -1,18 +1,25 @@
 version: "2"
 
+networks:
+  backend:
+    driver: bridge
+
 services:
   # TODO
   # redis:
 
-  postgress:
-    container_name: my-films-postgress
+  postgres:
+    container_name: my-films-postgres
     image: postgres:10-alpine
     environment:
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: postgres
       POSTGRES_DB: my-films
-      POSTGRES_USER: my-films
+    # volumes:
     ports:
       - 5432:5432
+    networks:
+      - backend
 
   api:
     container_name: my-films-api
@@ -28,3 +35,12 @@ services:
       - 9229:9229
     environment:
       NODE_ENV: development
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: postgres
+      POSTGRES_DB: my-films
+      POSTGRES_HOST: my-films-postgres
+      APP_HOST: 127.0.0.1
+      # GOOGLE_CLIENT_ID: ### .env.local ###
+      # GOOGLE_CLIENT_SECRET: ### .env.local ###
+    networks:
+      - backend

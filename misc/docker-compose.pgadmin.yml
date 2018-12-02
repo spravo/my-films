@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    logging:
+      driver: "none"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+  #    volumes:
+  #      - /data/pgadmin:/root/.pgadmin
+    ports:
+      - 5050:80

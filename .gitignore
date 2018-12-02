@@ -3,5 +3,9 @@ tmp
 dist
 build
 
+# ide
 .idea
 .vscode
+
+# private
+.env.local
