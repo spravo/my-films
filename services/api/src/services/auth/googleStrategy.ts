@@ -1,19 +1,24 @@
 import { OAuth2Strategy as GoogleStrategy, Profile } from 'passport-google-oauth';
 import { Strategy } from 'passport';
+import { inject, injectable } from 'inversify';
 
 import { IDatabaseConnector, IDatabasePoolConnection } from '../../utils/db';
 import { IAppConfig } from '../../config';
 import { IStrategy } from './index';
+import { iocTypes } from '../../ioc';
 
+@injectable()
 export default class PassportGoogleOauth implements IStrategy {
   dbConnector: IDatabaseConnector;
   config: IAppConfig;
   strategy: Strategy;
 
-  constructor (dbConnector: IDatabaseConnector, config: IAppConfig) {
+  constructor (
+    @inject(iocTypes.AppConfig) config: IAppConfig,
+    @inject(iocTypes.DatabaseConnector) dbConnector: IDatabaseConnector
+  ) {
     this.dbConnector = dbConnector;
     this.config = config;
-
     this.strategy = new GoogleStrategy({ ...this.config.googleAuth, }, this.verifyCallback.bind(this));
   }
 

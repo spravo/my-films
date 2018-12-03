@@ -1,4 +1,5 @@
 import pg from 'pg';
+import { injectable } from 'inversify';
 
 export interface IDatabasePoolConnection {
   query: Function;
@@ -10,13 +11,16 @@ export interface IDatabaseConnector {
   runQuery<T = any>(connection: IDatabasePoolConnection, sql: string, values?: any[]): Promise<T[]>;
   runQueryOne<T =any>(connection: IDatabasePoolConnection, sql: string, values?: any[]): Promise<T>;
   release(connection: IDatabasePoolConnection): void;
+  pool: any;
+  init(config: any): void;
 }
 
+@injectable()
 export default class DatabaseConnector implements IDatabaseConnector {
   private static pool: pg.Pool;
 
-  static init (config: pg.PoolConfig) {
-    DatabaseConnector.pool = new pg.Pool(config)
+  init (config: pg.PoolConfig) {
+    DatabaseConnector.pool = new pg.Pool(config);
   }
 
   get pool () {

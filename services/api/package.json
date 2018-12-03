@@ -30,9 +30,11 @@
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "inversify": "^5.0.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "pg": "^7.6.1",
-    "postgraphile": "^4.0.1"
+    "postgraphile": "^4.0.1",
+    "reflect-metadata": "^0.1.12"
   }
 }

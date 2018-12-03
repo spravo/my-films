@@ -1,3 +1,5 @@
+import { injectable } from 'inversify';
+
 export interface IAppConfig {
   postgressConnectionString: string;
   environment: string;
@@ -11,6 +13,7 @@ interface IGoogleAuthConfig {
   callbackURL: string;
 }
 
+@injectable()
 export default class AppConfig implements Readonly<IAppConfig> {
   readonly environment: string = process.env.NODE_ENV || 'development';
 

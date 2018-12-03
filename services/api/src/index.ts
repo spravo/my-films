@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import bodyParser from 'body-parser';
 import express from 'express';
 import passport from 'passport';
@@ -5,26 +6,23 @@ import session from 'express-session';
 import postgraphile from 'postgraphile';
 import dotenv from 'dotenv';
 
-import DBConnector from './utils/db';
-import PassportService from './services/auth';
-import PassportGoogleService from './services/auth/googleStrategy';
-import AppConfig from './config';
-
-
+import { IDatabaseConnector } from './utils/db';
+import PassportService, { IStrategy } from './services/auth';
+import { IAppConfig } from './config';
+import { iocTypes, iocContainer } from './ioc';
 
 async function main () {
-  const appConfig = new AppConfig();
+  const appConfig = iocContainer.get<IAppConfig>(iocTypes.AppConfig);
+  const dbConnector = iocContainer.get<IDatabaseConnector>(iocTypes.DatabaseConnector);
+  const passportService = iocContainer.get<PassportService>(iocTypes.PassportService);
 
   if (appConfig.environment === 'development') {
     dotenv.config({ path: __dirname + '/.env.local' });
   }
-  DBConnector.init({ connectionString: `postgresql://${appConfig.postgressConnectionString}` });
-
-  const dbConnector = new DBConnector();
-  const passportService = new PassportService(dbConnector);
+  dbConnector.init({ connectionString: `postgresql://${appConfig.postgressConnectionString}` });
 
   passportService.init([
-    new PassportGoogleService(dbConnector, appConfig),
+    iocContainer.get<IStrategy>(iocTypes.PassportGoogleService),
   ]);
 
   const app = express();

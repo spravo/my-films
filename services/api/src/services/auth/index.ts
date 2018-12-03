@@ -1,14 +1,20 @@
 import passport from 'passport';
+import { inject, injectable } from 'inversify';
+
 import { IDatabaseConnector, IDatabasePoolConnection } from '../../utils/db';
+import { iocTypes } from '../../ioc';
 
 export interface IStrategy {
   strategy: passport.Strategy;
 }
 
-export default class Passport {
+@injectable()
+export default class PassportService {
   dbConnector: IDatabaseConnector;
 
-  constructor (dbConnector: IDatabaseConnector) {
+  constructor (
+    @inject(iocTypes.DatabaseConnector) dbConnector: IDatabaseConnector
+  ) {
     this.dbConnector = dbConnector;
   }
 
