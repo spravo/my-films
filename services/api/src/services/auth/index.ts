@@ -29,7 +29,13 @@ export default class PassportService {
     let connection: IDatabasePoolConnection|undefined;
     try {
       connection = await this.dbConnector.getConnection();
-      const user = await this.dbConnector.runQueryOne(connection, 'SELECT * FROM my_films.person WHERE id = $1', [ id ]);
+      // TODO: move to a repository file
+      const user = await this.dbConnector.runQueryOne(
+        connection,
+        // language=SQL
+        'SELECT person.* FROM public.person as person WHERE person.id = $1',
+        [ id ]
+      );
 
       done(null, user);
     } catch (e) {

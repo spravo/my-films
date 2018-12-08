@@ -1,2 +1,5 @@
-drop schema my_films;
-drop schema my_films_private;
+begin;
+
+drop schema private;
+
+commit;

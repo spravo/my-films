@@ -26,18 +26,22 @@ export default class PassportGoogleOauth implements IStrategy {
     let connection: IDatabasePoolConnection|undefined;
     try {
       connection = await this.dbConnector.getConnection();
-      let user: any|undefined = await this.dbConnector.runQueryOne(
+      // TODO: move to a repository file
+      let user: { person_id?: number, id?: number }|undefined = await this.dbConnector.runQueryOne(
         connection,
-        'select * from my_films_private.person_account where googleid = $1',
+        // language=SQL
+        `select person_account.person_id from private.person_account as person_account where person_account.googleid = $1`,
         [ profile.id ]
       );
 
       if (user) {
         done(null, user);
       } else {
+        // TODO: move to a repository file
         user = await this.dbConnector.runQueryOne(
           connection,
-          'select (my_films_private.register_person($1, $2)).id',
+          // language=SQL
+          'select person.id from private.register_person($1, $2) as person',
           [ profile.id, profile.displayName ]
         );
 

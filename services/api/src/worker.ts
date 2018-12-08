@@ -3,6 +3,8 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import bodyParser from 'body-parser';
+import postgraphile from 'postgraphile';
+import _ from 'lodash';
 
 import iocContainer from './ioc/container';
 import {IAppConfig} from './config';
@@ -19,7 +21,11 @@ export default class Worker {
     if (appConfig.environment === 'development') {
       dotenv.config({ path: __dirname + '/.env.local' });
     }
-    dbConnector.init({ connectionString: `postgresql://${appConfig.postgressConnectionString}` });
+    dbConnector.init({
+      connectionString: `postgresql://${appConfig.postgressConnectionString}`,
+      // workers + master
+      max: Math.ceil(20 / (appConfig.workersCount + 1)),
+    });
 
     passportService.init([
       iocContainer.get<IStrategy>(iocTypes.PassportGoogleService),
@@ -37,7 +43,17 @@ export default class Worker {
     app.use(passport.session());
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    // app.use(postgraphile(dbConnector.pool, 'my_films'));
+    app.use(postgraphile(dbConnector.pool, 'public', {
+      graphiql: appConfig.environment === 'development',
+      watchPg: appConfig.environment === 'development',
+      graphiqlRoute: '/graphiql',
+      graphqlRoute: '/graphql',
+      pgSettings: async (req: any)=> {
+        return {
+          'user.id': _.get(req, 'user.id'),
+        };
+      },
+    }));
 
     // TODO: move to separate file
     app.get('/auth/google',
@@ -49,8 +65,7 @@ export default class Worker {
 
     // http://127.0.0.1:3000/auth/google
     app.listen(3000, () => {
-      const separator = '---------';
-      console.info(separator, 'server started', separator);
+      console.info('http server available');
     });
   }
 }
