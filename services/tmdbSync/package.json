@@ -1,0 +1,27 @@
+{
+  "name": "my-films-tmdb-sync",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Just for fun",
+  "main": "src/index.ts",
+  "scripts": {
+    "app:start": "ts-node --inspect=0.0.0.0:9239 src/index.ts"
+  },
+  "author": "Dima Ivanenko",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/async": "^2.0.50",
+    "@types/lodash": "^4.14.119",
+    "@types/node": "^10.12.12",
+    "@types/tress": "^1.0.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "async": "^2.6.1",
+    "axios": "^0.18.0",
+    "lodash": "^4.17.11",
+    "request-rate-limiter": "^1.0.2",
+    "tress": "^1.1.4"
+  }
+}

@@ -32,7 +32,7 @@ services:
     tty: true
     ports:
       - 3000:3000
-      - 9229:9229
+      - 9229:9229 # for debug
     environment:
       NODE_ENV: development
       POSTGRES_PASSWORD: changeme
@@ -42,5 +42,21 @@ services:
       APP_HOST: 127.0.0.1
       # GOOGLE_CLIENT_ID: ### .env.local ###
       # GOOGLE_CLIENT_SECRET: ### .env.local ###
+    networks:
+      - backend
+
+  tmdb-sync:
+    container_name: my-films-tmdb-sync
+    build:
+      context: services/tmdbSync
+    volumes:
+      - ./services/tmdbSync:/usr/tmdbSync
+    entrypoint: /bin/sh
+    command: -s
+    tty: true
+    ports:
+      - 9239:9239 # for debug
+    environment:
+      API_HOST: my-films-api/internail
     networks:
       - backend
