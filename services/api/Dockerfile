@@ -1,2 +1,6 @@
 FROM node:10-alpine
-WORKDIR /usr/app
+WORKDIR /usr/api
+
+RUN chown node:node .
+
+USER node

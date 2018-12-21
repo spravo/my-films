@@ -26,7 +26,7 @@ services:
     build:
       context: services/api
     volumes:
-      - ./services/api:/usr/app
+      - ./services/api:/usr/api
     entrypoint: /bin/sh
     command: -s
     tty: true
