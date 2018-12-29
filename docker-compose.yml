@@ -59,6 +59,7 @@ services:
     environment:
       API_HOST: my-films-api/internail
       DEBUG: app:*
+      # TMDB_API_KEY_V3
     env_file:
       - ./services/synchronizer/docker.env
     networks:

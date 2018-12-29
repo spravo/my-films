@@ -1,7 +1,10 @@
 import EventEmitter from 'events'
 
+import createNamespaceDebug from 'debug';
 import _ from 'lodash';
 import async from 'async';
+
+const debug = createNamespaceDebug('app:queue');
 
 export interface IJobQueue<T = any> {
   readonly payload: T;
@@ -102,6 +105,8 @@ export default class Queue<T = any> implements IQueue<T> {
   constructor (options: { concurrency?: number, jobHandler: IJobHandler<T> }) {
     this.concurrency = options.concurrency || 5;
     this.jobHandler = options.jobHandler;
+
+    debug('init', { concurrency: this.concurrency });
   }
 
   public addJob (payload: T) {
@@ -121,6 +126,7 @@ export default class Queue<T = any> implements IQueue<T> {
       return false;
     }
 
+    debug('start', { length: this.jobs.length });
     this.emitter.emit(this.emitterDescriptor.queueStart, { length: this.jobs.length });
     this.status = IStatus.run;
     async.forEachLimit<IJobQueue<T>, Error>(this.jobs, this.concurrency, this.handlerIterator, this.handlerQueueEnd);
