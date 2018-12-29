@@ -40,8 +40,11 @@ services:
       POSTGRES_DB: my-films
       POSTGRES_HOST: my-films-postgres
       APP_HOST: 127.0.0.1
-      # GOOGLE_CLIENT_ID: ### .env.local ###
-      # GOOGLE_CLIENT_SECRET: ### .env.local ###
+      DEBUG: app:*
+      # GOOGLE_CLIENT_ID
+      # GOOGLE_CLIENT_SECRET
+    env_file:
+      - ./services/api/docker.env
     networks:
       - backend
 
@@ -57,7 +60,7 @@ services:
     ports:
       - 9239:9239 # for debug
     environment:
-      API_HOST: my-films-api/internail
+      API_HOST: my-films-api/internal
       DEBUG: app:*
       # TMDB_API_KEY_V3
     env_file:

@@ -1,5 +1,4 @@
 import cluster from 'cluster';
-import dotenv from 'dotenv';
 import _ from 'lodash';
 
 import { IAppConfig } from './config';
@@ -12,10 +11,6 @@ export default class Master {
   constructor () {
     this.config = iocContainer.get(iocTypes.AppConfig);
     this.workers = [];
-
-    if (this.config.environment === 'development') {
-      dotenv.config({ path: __dirname + '/.env.local' });
-    }
   }
 
   createWorker () {

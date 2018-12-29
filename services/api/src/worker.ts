@@ -1,4 +1,5 @@
-import dotenv from 'dotenv';
+import 'reflect-metadata';
+
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -11,6 +12,7 @@ import {IAppConfig} from './config';
 import iocTypes from './ioc/types';
 import {IDatabaseConnector} from './utils/db';
 import PassportService, {IStrategy} from './services/auth';
+import { BaseAction } from './controllers/baseAction';
 
 export default class Worker {
   async init () {
@@ -18,9 +20,6 @@ export default class Worker {
     const dbConnector = iocContainer.get<IDatabaseConnector>(iocTypes.DatabaseConnector);
     const passportService = iocContainer.get<PassportService>(iocTypes.PassportService);
 
-    if (appConfig.environment === 'development') {
-      dotenv.config({ path: __dirname + '/.env.local' });
-    }
     dbConnector.init({
       connectionString: `postgresql://${appConfig.postgressConnectionString}`,
       // workers + master
@@ -56,6 +55,8 @@ export default class Worker {
     }));
 
     // TODO: move to separate file
+    app.post('/internal/api/movies', iocContainer.get<BaseAction>(iocTypes.SaveMovieAction).runAction());
+
     app.get('/auth/google',
       passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
     app.get(appConfig.googleAuth.callbackURL,
