@@ -45,12 +45,12 @@ services:
     networks:
       - backend
 
-  tmdb-sync:
-    container_name: my-films-tmdb-sync
+  synchronizer:
+    container_name: my-films-synchronizer
     build:
-      context: services/tmdbSync
+      context: services/synchronizer
     volumes:
-      - ./services/tmdbSync:/usr/tmdbSync
+      - ./services/synchronizer:/usr/synchronizer
     entrypoint: /bin/sh
     command: -s
     tty: true
@@ -58,5 +58,8 @@ services:
       - 9239:9239 # for debug
     environment:
       API_HOST: my-films-api/internail
+      DEBUG: app:*
+    env_file:
+      - ./services/synchronizer/docker.env
     networks:
       - backend

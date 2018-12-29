@@ -9,3 +9,4 @@ build
 
 # private
 .env.local
+docker.env

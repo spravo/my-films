@@ -1,5 +1,5 @@
 FROM node:10-alpine
-WORKDIR /usr/tmdbSync
+WORKDIR /usr/synchronizer
 
 RUN chown node:node .
 
