@@ -1,0 +1,14 @@
+[
+  {
+    "httpPath": "/internal/api",
+    "controllers": [
+      {
+        "httpPath": "/movies",
+        "httpMethod": "post",
+        "controllerName": "SaveMovieAction",
+        "middleware": []
+      }
+    ],
+    "middleware": []
+  }
+]

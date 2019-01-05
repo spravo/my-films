@@ -12,7 +12,7 @@ import {IAppConfig} from './config';
 import iocTypes from './ioc/types';
 import {IDatabaseConnector} from './utils/db';
 import PassportService, {IStrategy} from './services/auth';
-import { BaseAction } from './controllers/baseAction';
+import registerRoutes from './routers';
 
 export default class Worker {
   async init () {
@@ -54,15 +54,7 @@ export default class Worker {
       },
     }));
 
-    // TODO: move to separate file
-    app.post('/internal/api/movies', iocContainer.get<BaseAction>(iocTypes.SaveMovieAction).runAction());
-
-    app.get('/auth/google',
-      passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
-    app.get(appConfig.googleAuth.callbackURL,
-      passport.authenticate('google', { failureRedirect: '/login' }),
-      (req, res) => res.redirect('/')
-    );
+    registerRoutes(app);
 
     // http://127.0.0.1:3000/auth/google
     app.listen(3000, () => {

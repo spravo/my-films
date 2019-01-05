@@ -5,9 +5,7 @@ import types from './types';
 import DatabaseConnector from '../utils/db';
 import PassportGoogleOauth from '../services/auth/googleStrategy';
 import PassportService from '../services/auth';
-
-import { BaseAction } from '../controllers/baseAction';
-import SaveMovieAction from '../controllers/internal/saveMovie';
+import registerActions from '../controllers';
 
 const container = new Container();
 
@@ -16,8 +14,7 @@ container.bind(types.DatabaseConnector).to(DatabaseConnector);
 container.bind(types.PassportGoogleService).to(PassportGoogleOauth);
 container.bind(types.PassportService).to(PassportService);
 
-// actions
-container.bind<BaseAction>(types.SaveMovieAction).to(SaveMovieAction);
+registerActions(container);
 
 export default container;
 

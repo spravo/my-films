@@ -32,7 +32,7 @@ services:
     tty: true
     ports:
       - 3000:3000
-      - 9229:9229 # for debug
+      - 9229-9234:9229-9234 # for debug
     environment:
       NODE_ENV: development
       POSTGRES_PASSWORD: changeme

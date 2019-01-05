@@ -1,0 +1,6 @@
+[
+  {
+    "path": "internal/saveMovie",
+    "name": "SaveMovieAction"
+  }
+]
