@@ -3,6 +3,7 @@ const TYPES = {
   AppConfig: Symbol.for('AppConfig'),
   PassportService: Symbol.for('PassportService'),
   PassportGoogleService: Symbol.for('PassportGoogleService'),
+  LoggerService: Symbol.for('LoggerService'),
 };
 
 export default TYPES;
