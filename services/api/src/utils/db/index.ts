@@ -1,5 +1,6 @@
 import pg from 'pg';
-import { injectable } from 'inversify';
+import { injectable } from '../../ioc';
+import ExtendedError from '../error';
 
 export interface IDatabasePoolConnection {
   query: Function;
@@ -20,6 +21,13 @@ export default class DatabaseConnector implements IDatabaseConnector {
   private static pool: pg.Pool;
 
   init (config: pg.PoolConfig) {
+    if (DatabaseConnector.pool) {
+      throw new ExtendedError({
+        message: 'DB pool already exists',
+        critical: true,
+      });
+    }
+
     DatabaseConnector.pool = new pg.Pool(config);
   }
 
@@ -28,6 +36,13 @@ export default class DatabaseConnector implements IDatabaseConnector {
   }
 
   async getConnection (): Promise<IDatabasePoolConnection> {
+    if (!DatabaseConnector.pool) {
+      throw new ExtendedError({
+        message: 'DB pool does\'t exist',
+        critical: true,
+      });
+    }
+
     return DatabaseConnector.pool.connect();
   }
 
@@ -36,6 +51,13 @@ export default class DatabaseConnector implements IDatabaseConnector {
   }
 
   async runQuery<T = any>(connection: IDatabasePoolConnection, sql: string, values?: any[]): Promise<T[]> {
+    if (!DatabaseConnector.pool) {
+      throw new ExtendedError({
+        message: 'DB pool does\'t exist',
+        critical: true,
+      });
+    }
+
     const { rows } = await connection.query(sql, values || []);
     return rows;
   }
