@@ -1,8 +1,7 @@
 import passport from 'passport';
-import { inject, injectable } from 'inversify';
 
-import { IDatabaseConnector, IDatabasePoolConnection } from '../../utils/db';
-import { iocTypes } from '../../ioc';
+import { IDatabaseConnector, IDatabasePoolConnection } from 'core/utils/db';
+import { iocTypes, inject, injectable } from 'core/ioc';
 
 export interface IStrategy {
   strategy: passport.Strategy;

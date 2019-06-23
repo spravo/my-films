@@ -1,8 +1,8 @@
 import cluster from 'cluster';
 import _ from 'lodash';
 
-import { IAppConfig } from './config';
-import { iocTypes, iocContainer } from './ioc';
+import { IAppConfig } from 'core/config';
+import { iocTypes, iocContainer } from 'core/ioc';
 
 export default class Master {
   config: IAppConfig;

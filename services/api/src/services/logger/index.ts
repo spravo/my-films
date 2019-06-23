@@ -1,5 +1,5 @@
 import debug from 'debug';
-import { injectable } from '../../ioc';
+import { injectable } from 'core/ioc';
 import ILoggerService from './interface';
 
 @injectable()

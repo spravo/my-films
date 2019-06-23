@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
 import _ from 'lodash';
-import { inject, injectable } from 'inversify';
 
-import { IDictionary } from '../utils/types';
-import { IDatabaseConnector, IDatabasePoolConnection } from '../utils/db';
-import iocTypes from '../ioc/types';
+import { IDictionary } from 'core/utils/types';
+import { IDatabaseConnector, IDatabasePoolConnection } from 'core/utils/db';
+import { iocTypes, inject, injectable } from 'core/ioc';
 
 export abstract class BaseAction {
   protected async validation (req: Request, schemas: IDictionary<Joi.Schema>): Promise<void> {

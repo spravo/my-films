@@ -2,13 +2,13 @@ import { Container } from 'inversify';
 
 import AppConfig, { IAppConfig } from '../config';
 import types from './types';
-import DatabaseConnector from '../utils/db';
-import PassportGoogleOauth from '../services/auth/googleStrategy';
-import PassportService from '../services/auth';
-import registerActions from '../controllers';
+import DatabaseConnector from 'core/utils/db';
+import PassportGoogleOauth from 'core/services/auth/googleStrategy';
+import PassportService from 'core/services/auth';
+import registerActions from 'core/controllers';
 
-import LoggerService from '../services/logger';
-import ILoggerService from '../services/logger/interface';
+import LoggerService from 'core/services/logger';
+import ILoggerService from 'core/services/logger/interface';
 
 const container = new Container();
 

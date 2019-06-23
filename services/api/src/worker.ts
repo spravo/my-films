@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -7,12 +5,11 @@ import bodyParser from 'body-parser';
 import postgraphile from 'postgraphile';
 import _ from 'lodash';
 
-import iocContainer from './ioc/container';
-import {IAppConfig} from './config';
-import iocTypes from './ioc/types';
-import {IDatabaseConnector} from './utils/db';
-import PassportService, {IStrategy} from './services/auth';
-import registerRoutes from './routers';
+import { iocContainer, iocTypes } from 'core/ioc';
+import {IAppConfig} from 'core/config';
+import {IDatabaseConnector} from 'core/utils/db';
+import PassportService, {IStrategy} from 'core/services/auth';
+import registerRoutes from 'core/routers';
 
 export default class Worker {
   async init () {

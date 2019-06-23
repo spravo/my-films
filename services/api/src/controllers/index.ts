@@ -2,7 +2,7 @@ import path from 'path';
 import { Container } from 'inversify';
 
 import config from './register.json';
-import { BaseAction } from './baseAction';
+import { BaseAction } from 'core/controllers/baseAction';
 
 interface IControllerConfig {
   path: string;

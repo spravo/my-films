@@ -1,6 +1,6 @@
 import pg from 'pg';
-import { injectable } from '../../ioc';
-import ExtendedError from '../error';
+import { injectable } from 'core/ioc';
+import ExtendedError from 'core/utils/error';
 
 export interface IDatabasePoolConnection {
   query: Function;

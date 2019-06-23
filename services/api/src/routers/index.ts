@@ -3,9 +3,9 @@ import _ from 'lodash';
 import passport from 'passport';
 
 import config from './config.json';
-import { iocContainer, iocTypes } from '../ioc';
-import { BaseAction } from '../controllers/baseAction';
-import { IAppConfig } from '../config';
+import { iocContainer, iocTypes } from 'core/ioc';
+import { BaseAction } from 'core/controllers/baseAction';
+import { IAppConfig } from 'core/config';
 
 type IRouteMethod = 'post'|'get'|'put'|'delete'|'patch'|'head';
 

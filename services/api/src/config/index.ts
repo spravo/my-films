@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { injectable } from 'core/ioc';
 import os from 'os';
 
 export interface IAppConfig {

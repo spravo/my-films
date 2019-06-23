@@ -1,11 +1,10 @@
 import { OAuth2Strategy as GoogleStrategy, Profile } from 'passport-google-oauth';
 import { Strategy } from 'passport';
-import { inject, injectable } from 'inversify';
 
-import { IDatabaseConnector, IDatabasePoolConnection } from '../../utils/db';
-import { IAppConfig } from '../../config';
+import { IDatabaseConnector, IDatabasePoolConnection } from 'core/utils/db';
+import { IAppConfig } from 'core/config';
 import { IStrategy } from './index';
-import { iocTypes } from '../../ioc';
+import { iocTypes, inject, injectable } from 'core/ioc';
 
 @injectable()
 export default class PassportGoogleOauth implements IStrategy {
